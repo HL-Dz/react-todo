@@ -1,0 +1,41 @@
+.spinner {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgba(230, 230, 230, 0.5);
+  z-index: 2;
+}
+
+
+.spinner__circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+}
+.spinner__circle:after {
+  content: " ";
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  border-color: #1890ff transparent #1890ff transparent;
+  animation: spic-c 0.5s linear infinite;
+}
+@keyframes spic-c {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

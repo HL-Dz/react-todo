@@ -15,7 +15,9 @@
     "@types/react-router-dom": "^5.3.2",
     "@types/uuid": "^8.3.1",
     "antd": "^4.16.13",
+    "express": "^4.17.1",
     "node-sass": "4.9",
+    "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
@@ -32,8 +34,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "nodemon server.js"
   },
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": [
       "react-app",

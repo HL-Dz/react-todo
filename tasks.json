@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "cls": "task",
+    "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "completed": false
+  },
+  {
+    "id": "2",
+    "cls": "task",
+    "text": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    "completed": false
+  },
+  {
+    "id": "3",
+    "cls": "task",
+    "text": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.",
+    "completed": true
+  },
+  {
+    "id": "4",
+    "cls": "task",
+    "text": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.",
+    "completed": true
+  },
+  {
+    "id": "5",
+    "cls": "task",
+    "text": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.",
+    "completed": false
+  }
+]

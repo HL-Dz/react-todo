@@ -7,13 +7,13 @@ import {
   SetAllTasksAction,
   AddNewTaskAction,
   DeleteTaskAction,
-  CompleteTaskAction
+  CompleteTaskAction,
+  SetIsLoadingAction
 } from "../types/todos";
 
 let initialState = {
   tasks: [] as Array<ITodo> | [],
   isLoading: false,
-  isVisible: false
 };
 
 type TodosInitialState = typeof initialState;
@@ -25,6 +25,11 @@ const todosReducer = (state = initialState, action: TaskAction) :TodosInitialSta
       return {
         ...state,
         tasks: action.tasks
+      }
+    case TasksActionTypes.SET_IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.isLoading
       }
     case TasksActionTypes.ADD_TASK:
       return {
@@ -54,6 +59,10 @@ const todosReducer = (state = initialState, action: TaskAction) :TodosInitialSta
 
 
 // Action creators
+const setIsLoading = (isLoading: boolean): SetIsLoadingAction => ({
+  type: TasksActionTypes.SET_IS_LOADING,
+  isLoading
+})
 const setAllTasksAC = (tasks : Array<ITodo> | []): SetAllTasksAction => ({
   type: TasksActionTypes.GET_TASKS,
   tasks
@@ -73,8 +82,21 @@ const completeTaskAC = (id: string) :CompleteTaskAction => ({
 
 
 // Thunks
-export const getAllTasks = () => async(dispatch: Dispatch<TaskAction>) => {
-  dispatch(setAllTasksAC([]));
+export const getAllTasks = () => async (dispatch: Dispatch<TaskAction>) => {
+  dispatch(setIsLoading(true));
+  await delay(700);
+  const response = await fetch('/tasks', {
+    method: "GET",
+    headers: {
+      "Accept": "application/json"
+    }
+  });
+  if(response.ok === true) {
+    const tasks = await response.json();
+    dispatch(setAllTasksAC(tasks));
+    dispatch(setIsLoading(false));
+  }
+  dispatch(setIsLoading(false));
 }
 
 export const addNewTask = (task:ITodo) => async (dispatch: Dispatch<TaskAction>) => {
