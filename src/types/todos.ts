@@ -1,7 +1,7 @@
-export enum TodosActionTypes {
+export enum TasksActionTypes {
   GET_TASKS = 'GET_TODOS',
   ADD_TASK = 'ADD_TASK',
-  REMOVE_TASK = 'REMOVE_TASK',
+  DELETE_TASK = 'DELETE_TASK',
   COMPLETE_TASK = 'COMPLETE_TASK'
 }
 
@@ -12,11 +12,30 @@ export interface ITodo {
   completed: boolean
 };
 
-interface SetAllTodosAction {
-  type: TodosActionTypes.GET_TASKS
-  todos: Array<ITodo> | []
+export interface SetAllTasksAction {
+  type: TasksActionTypes.GET_TASKS
+  tasks: Array<ITodo> | []
+}
+
+export interface AddNewTaskAction {
+  type: TasksActionTypes.ADD_TASK
+  task: ITodo
+}
+
+export interface CompleteTaskAction {
+  type: TasksActionTypes.COMPLETE_TASK
+  id: string
+}
+
+export interface DeleteTaskAction {
+  type: TasksActionTypes.DELETE_TASK
+  id: string
 }
 
 
 
-export type TodosAction = SetAllTodosAction;
+export type TaskAction = 
+        SetAllTasksAction |
+        AddNewTaskAction |
+        DeleteTaskAction |
+        CompleteTaskAction;
