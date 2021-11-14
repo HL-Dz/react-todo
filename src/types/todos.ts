@@ -7,7 +7,7 @@ export enum TasksActionTypes {
 }
 
 export interface ITodo {
-  id: string
+  _id: string
   cls: string
   text: string
   completed: boolean
@@ -35,7 +35,7 @@ export interface CompleteTaskAction {
 
 export interface DeleteTaskAction {
   type: TasksActionTypes.DELETE_TASK
-  id: string
+  _id: string
 }
 
 

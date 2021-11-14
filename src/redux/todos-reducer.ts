@@ -35,17 +35,17 @@ const todosReducer = (state = initialState, action: TaskAction) :TodosInitialSta
       return {
         ...state,
         tasks: state.tasks.map(task => {
-          if(task.id !== action.task.id) {
+          if(task._id !== action.task._id) {
             return task;
           } else {
-            return {...task, ...action.task}
+            return {...task, completed: !task.completed}
           }
         })
       }
     case TasksActionTypes.DELETE_TASK:
       return {
         ...state,
-        tasks: state.tasks.filter(task => task.id !== action.id)
+        tasks: state.tasks.filter(task => task._id !== action._id)
       }
     case TasksActionTypes.SET_IS_LOADING:
       return {
@@ -71,9 +71,9 @@ const addNewTaskAC = (task: ITodo): AddNewTaskAction => ({
   type: TasksActionTypes.ADD_TASK,
   task
 });
-const deleteTaskAC = (id:string): DeleteTaskAction => ({
+const deleteTaskAC = (_id:string): DeleteTaskAction => ({
   type: TasksActionTypes.DELETE_TASK,
-  id
+  _id
 });
 const completeTaskAC = (task: ITodo) :CompleteTaskAction => ({
   type: TasksActionTypes.COMPLETE_TASK,
@@ -116,7 +116,7 @@ export const addNewTask = (text: string) => async (dispatch: Dispatch<TaskAction
   }
 }
 
-export const completeTask = (id: string) => async (dispatch: Dispatch<TaskAction>) => {
+export const completeTask = (id: string, completed: boolean) => async (dispatch: Dispatch<TaskAction>) => {
   const res = await fetch('/tasks', {
     method: "PUT",
     headers: {
@@ -124,7 +124,8 @@ export const completeTask = (id: string) => async (dispatch: Dispatch<TaskAction
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      id: id
+      id: id,
+      completed: completed
     })
   })
 
@@ -143,7 +144,7 @@ export const deleteTask = (id:string) => async (dispatch: Dispatch<TaskAction>) 
   if(res.ok === true) {
     const task = await res.json();
     if(task) {
-      dispatch(deleteTaskAC(task.id));
+      dispatch(deleteTaskAC(task._id));
     }
   }
 }

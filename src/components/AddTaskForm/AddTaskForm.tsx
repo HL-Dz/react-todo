@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Input } from 'antd';
 import './AddTaskForm.scss';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { addNewTask } from '../../redux/todos-reducer';
 const AddTaskForm = () => {
   const dispatch = useDispatch();
@@ -10,12 +9,6 @@ const AddTaskForm = () => {
 
   const createNewTask = () => {
     if(taskValue.trim()) {
-      // let task = {
-      //   id: uuidv4(),
-      //   cls: 'task',
-      //   completed: false,
-      //   text: taskValue
-      // }
       dispatch(addNewTask(taskValue));
       setTaskValue('');
     }
