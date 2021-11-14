@@ -8,7 +8,7 @@ import {
   AddNewTaskAction,
   DeleteTaskAction,
   CompleteTaskAction,
-  SetIsLoadingAction
+  SetIsLoadingAction,
 } from "../types/todos";
 
 let initialState = {
@@ -26,11 +26,6 @@ const todosReducer = (state = initialState, action: TaskAction) :TodosInitialSta
         ...state,
         tasks: action.tasks
       }
-    case TasksActionTypes.SET_IS_LOADING:
-      return {
-        ...state,
-        isLoading: action.isLoading
-      }
     case TasksActionTypes.ADD_TASK:
       return {
         ...state,
@@ -40,10 +35,10 @@ const todosReducer = (state = initialState, action: TaskAction) :TodosInitialSta
       return {
         ...state,
         tasks: state.tasks.map(task => {
-          if(task.id !== action.id) {
+          if(task.id !== action.task.id) {
             return task;
           } else {
-            return {...task, completed: !task.completed}
+            return {...task, ...action.task}
           }
         })
       }
@@ -51,6 +46,11 @@ const todosReducer = (state = initialState, action: TaskAction) :TodosInitialSta
       return {
         ...state,
         tasks: state.tasks.filter(task => task.id !== action.id)
+      }
+    case TasksActionTypes.SET_IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.isLoading
       }
     default:
       return state
@@ -75,9 +75,9 @@ const deleteTaskAC = (id:string): DeleteTaskAction => ({
   type: TasksActionTypes.DELETE_TASK,
   id
 });
-const completeTaskAC = (id: string) :CompleteTaskAction => ({
+const completeTaskAC = (task: ITodo) :CompleteTaskAction => ({
   type: TasksActionTypes.COMPLETE_TASK,
-  id
+  task
 });
 
 
@@ -99,16 +99,53 @@ export const getAllTasks = () => async (dispatch: Dispatch<TaskAction>) => {
   dispatch(setIsLoading(false));
 }
 
-export const addNewTask = (task:ITodo) => async (dispatch: Dispatch<TaskAction>) => {
-  dispatch(addNewTaskAC(task));
+export const addNewTask = (text: string) => async (dispatch: Dispatch<TaskAction>) => {
+  const response = await  fetch('/tasks', {
+    method: 'POST',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      text: text
+    })
+  });
+  if(response.ok === true) {
+    const task = await response.json();
+    dispatch(addNewTaskAC(task));
+  }
 }
 
 export const completeTask = (id: string) => async (dispatch: Dispatch<TaskAction>) => {
-  dispatch(completeTaskAC(id));
+  const res = await fetch('/tasks', {
+    method: "PUT",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id: id
+    })
+  })
+
+  if(res.ok === true) {
+    const task = await res.json();
+    dispatch(completeTaskAC(task));
+  }
 }
 
 export const deleteTask = (id:string) => async (dispatch: Dispatch<TaskAction>) => {
-  dispatch(deleteTaskAC(id));
+  const res = await fetch('/tasks/' + id, {
+    method: "DELETE",
+    headers: { "Accept": "application/json" }
+  });
+
+  if(res.ok === true) {
+    const task = await res.json();
+    if(task) {
+      dispatch(deleteTaskAC(task.id));
+    }
+  }
 }
 
 

@@ -10,13 +10,13 @@ const AddTaskForm = () => {
 
   const createNewTask = () => {
     if(taskValue.trim()) {
-      let task = {
-        id: uuidv4(),
-        cls: 'task',
-        completed: false,
-        text: taskValue
-      }
-      dispatch(addNewTask(task));
+      // let task = {
+      //   id: uuidv4(),
+      //   cls: 'task',
+      //   completed: false,
+      //   text: taskValue
+      // }
+      dispatch(addNewTask(taskValue));
       setTaskValue('');
     }
   }

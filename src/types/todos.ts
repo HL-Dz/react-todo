@@ -3,7 +3,7 @@ export enum TasksActionTypes {
   ADD_TASK = 'ADD_TASK',
   DELETE_TASK = 'DELETE_TASK',
   COMPLETE_TASK = 'COMPLETE_TASK',
-  SET_IS_LOADING = 'SET_IS_LOADING'
+  SET_IS_LOADING = 'SET_IS_LOADING',
 }
 
 export interface ITodo {
@@ -30,14 +30,13 @@ export interface AddNewTaskAction {
 
 export interface CompleteTaskAction {
   type: TasksActionTypes.COMPLETE_TASK
-  id: string
+  task: ITodo
 }
 
 export interface DeleteTaskAction {
   type: TasksActionTypes.DELETE_TASK
   id: string
 }
-
 
 
 export type TaskAction = 
