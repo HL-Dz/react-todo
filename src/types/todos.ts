@@ -1,9 +1,9 @@
 export enum TasksActionTypes {
-  GET_TASKS = 'GET_TODOS',
-  ADD_TASK = 'ADD_TASK',
-  DELETE_TASK = 'DELETE_TASK',
-  COMPLETE_TASK = 'COMPLETE_TASK',
-  SET_IS_LOADING = 'SET_IS_LOADING',
+  GET_TASKS = "GET_TODOS",
+  ADD_TASK = "ADD_TASK",
+  DELETE_TASK = "DELETE_TASK",
+  COMPLETE_TASK = "COMPLETE_TASK",
+  SET_IS_LOADING = "SET_IS_LOADING",
 }
 
 export interface ITodo {
@@ -11,7 +11,7 @@ export interface ITodo {
   cls: string
   text: string
   completed: boolean
-};
+}
 
 export interface SetIsLoadingAction {
   type: TasksActionTypes.SET_IS_LOADING

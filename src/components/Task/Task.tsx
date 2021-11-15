@@ -1,17 +1,17 @@
-import React, { FC } from 'react';
-import "./Task.scss";
-import { Button, Checkbox, Typography } from 'antd';
-import { ITodo } from '../../types/todos';
-import { useDispatch } from 'react-redux';
-import { completeTask, deleteTask } from '../../redux/todos-reducer';
-const { Text } = Typography;
+import React, { FC } from "react"
+import "./Task.scss"
+import { Button, Checkbox, Typography } from "antd"
+import { ITodo } from "../../types/todos"
+import { useDispatch } from "react-redux"
+import { completeTask, deleteTask } from "../../redux/todos-reducer"
+const { Text } = Typography
 const Task: FC<ITodo> = ({...task}) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const deleteCurrentTask = async (id:string) => {
-    dispatch(deleteTask(id));
+    dispatch(deleteTask(id))
   }
-
+  
   return (
     <div className={task.cls}>
       <Checkbox
@@ -23,7 +23,11 @@ const Task: FC<ITodo> = ({...task}) => {
       />
       <Text
         disabled={task.completed}
-      >{task.text}</Text>
+      >
+        <span className="task__text">
+          {task.text}
+        </span>
+      </Text>
       <Button
         className="task__remove"
         onClick={() => {deleteCurrentTask(task._id)}}
@@ -34,4 +38,4 @@ const Task: FC<ITodo> = ({...task}) => {
   )
 }
 
-export default Task;
+export default Task

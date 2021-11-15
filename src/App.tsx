@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.scss';
-import Todolist from './components/Todolist/Todolist';
+import React from "react"
+import "./App.scss"
+import Todolist from "./components/Todolist/Todolist"
 
 const App = () => {
   return (
@@ -12,4 +12,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App

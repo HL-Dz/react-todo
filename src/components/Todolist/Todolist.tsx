@@ -1,7 +1,7 @@
-import React from 'react';
-import AddTaskForm from '../AddTaskForm/AddTaskForm';
-import Tasks from '../Tasks/Tasks';
-import "./Todolist.scss";
+import React from "react"
+import AddTaskForm from "../AddTaskForm/AddTaskForm"
+import Tasks from "../Tasks/Tasks"
+import "./Todolist.scss"
 
 const Todolist = () => {
   return (
@@ -13,4 +13,4 @@ const Todolist = () => {
   )
 }
 
-export default Todolist;
+export default Todolist

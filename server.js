@@ -1,12 +1,9 @@
-const express = require('express');
-const http = require('http');
-const {v4: uuidv4} = require('uuid');
+const express = require("express");
+const http = require("http");
 const app = express();
-const mongoose = require('mongoose');
-const fs = require("fs");
+const mongoose = require("mongoose");
 const port = 3001;
 const jsonParser = express.json();
-const filePath = "tasks.json";
 
 const Schema = mongoose.Schema;
 const todoScheme = new Schema({cls: String, text: String, completed: Boolean}, {versionKey: false});
@@ -23,18 +20,18 @@ mongoose.connect("mongodb://localhost:27017/todosdb", {
 )
 
 // GET ALL TASKS
-app.get('/tasks', (req,res) => {
+app.get("/tasks", (req,res) => {
   Todo.find({}, (err, todos) => {
     res.send(todos);
   })
 });
 
 // ADD NEW TASK
-app.post('/tasks', jsonParser, (req,res) => {
+app.post("/tasks", jsonParser, (req,res) => {
   if(!req.body) return res.sendStatus(400);
   const textValue = req.body.text;
   const todo = new Todo({
-    cls: 'task',
+    cls: "task",
     completed: false,
     text: textValue
   });
@@ -46,7 +43,7 @@ app.post('/tasks', jsonParser, (req,res) => {
 });
 
 // DELETE TASK
-app.delete('/tasks/:id', (req,res) => {
+app.delete("/tasks/:id", (req,res) => {
   const id = req.params.id
   Todo.findByIdAndDelete(id, (err, todo) => {
     if(err) return console.log(err);
@@ -56,7 +53,7 @@ app.delete('/tasks/:id', (req,res) => {
 })
 
 // UPDATE TASK
-app.put('/tasks', jsonParser, (req,res) => {
+app.put("/tasks", jsonParser, (req,res) => {
   if(!req.body) return res.sendStatus(404);
   const taskId = req.body.id;
   const newCompleted = req.body.completed;
