@@ -16,6 +16,8 @@ const initialState = {
   isLoading: false,
 }
 
+const API = "http://localhost:3000"
+
 type TodosInitialState = typeof initialState;
 
 
@@ -85,13 +87,10 @@ const completeTaskAC = (task: ITodo) :CompleteTaskAction => ({
 export const getAllTasks = () => async (dispatch: Dispatch<TaskAction>) => {
   dispatch(setIsLoading(true))
   await delay(700)
-  const response = await fetch("/tasks", {
-    method: "GET",
-    headers: {
-      "Accept": "application/json"
-    }
-  })
-  if(response.ok === true) {
+  const response = await fetch(`${API}/tasks`)
+  console.log(response)
+  
+  if(response.status === 200) {
     const tasks = await response.json()
     dispatch(setAllTasksAC(tasks))
     dispatch(setIsLoading(false))
@@ -100,7 +99,7 @@ export const getAllTasks = () => async (dispatch: Dispatch<TaskAction>) => {
 }
 
 export const addNewTask = (text: string) => async (dispatch: Dispatch<TaskAction>) => {
-  const response = await  fetch("/tasks", {
+  const response = await  fetch(`${API}/tasks`, {
     method: "POST",
     headers: {
       "Accept": "application/json",
@@ -117,7 +116,7 @@ export const addNewTask = (text: string) => async (dispatch: Dispatch<TaskAction
 }
 
 export const completeTask = (id: string, completed: boolean) => async (dispatch: Dispatch<TaskAction>) => {
-  const res = await fetch("/tasks", {
+  const res = await fetch(`/tasks`, {
     method: "PUT",
     headers: {
       "Accept": "application/json",
@@ -136,7 +135,7 @@ export const completeTask = (id: string, completed: boolean) => async (dispatch:
 }
 
 export const deleteTask = (id:string) => async (dispatch: Dispatch<TaskAction>) => {
-  const res = await fetch("/tasks/" + id, {
+  const res = await fetch(`/tasks/${id}`, {
     method: "DELETE",
     headers: { "Accept": "application/json" }
   })
