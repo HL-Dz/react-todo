@@ -1,15 +1,15 @@
 import React, { useState } from "react"
 import { Button, Input } from "antd"
 import "./AddTaskForm.scss"
-import { useDispatch } from "react-redux"
-import { addNewTask } from "../../redux/todos-reducer"
-const AddTaskForm = () => {
-  const dispatch = useDispatch()
+import { observer } from "mobx-react"
+import todostore from "../../mobx/store"
+
+const AddTaskForm = observer(() => {
   const [taskValue, setTaskValue] = useState("")
 
   const createNewTask = () => {
     if(taskValue.trim()) {
-      dispatch(addNewTask(taskValue))
+      todostore.addNewTask(taskValue)
       setTaskValue("")
     }
   }
@@ -29,9 +29,6 @@ const AddTaskForm = () => {
       </div>
     </div>
   )
-}
+})
 
 export default AddTaskForm
-
-
-

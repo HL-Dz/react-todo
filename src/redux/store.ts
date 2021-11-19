@@ -1,14 +1,14 @@
 import {applyMiddleware, combineReducers, createStore} from "redux"
-import thunkMiddleware from "redux-thunk"
-import todosReducer from "./todos-reducer"
+// import thunkMiddleware from "redux-thunk"
+// import todosReducer from "./todos-reducer"
 
-const rootReducer = combineReducers({
-  todosPage: todosReducer
-})
+// const rootReducer = combineReducers({
+//   todosPage: todosReducer
+// })
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+// const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 
-export type RootState = ReturnType<typeof rootReducer>
+// export type RootState = ReturnType<typeof rootReducer>
 
-export default store
+// export default store

@@ -2,14 +2,14 @@ import React, { FC } from "react"
 import "./Task.scss"
 import { Button, Checkbox, Typography } from "antd"
 import { ITodo } from "../../types/todos"
-import { useDispatch } from "react-redux"
-import { completeTask, deleteTask } from "../../redux/todos-reducer"
+import { observer } from "mobx-react"
 const { Text } = Typography
-const Task: FC<ITodo> = ({...task}) => {
-  const dispatch = useDispatch()
+import todostore from "../../mobx/store"
+
+const Task: FC<ITodo> = observer(({...task}) => {
 
   const deleteCurrentTask = async (id:string) => {
-    dispatch(deleteTask(id))
+    todostore.deleteTask(id)
   }
   
   return (
@@ -18,7 +18,7 @@ const Task: FC<ITodo> = ({...task}) => {
         type="checkbox"
         className="task-checkbox"
         checked={task.completed}
-        onChange={() => {dispatch(completeTask(task._id, !task.completed))}}
+        onChange={() => {todostore.completeTask(task._id, !task.completed)}}
         id="checkbox-elem"
       />
       <Text
@@ -36,6 +36,6 @@ const Task: FC<ITodo> = ({...task}) => {
       >Delete</Button>
     </div>
   )
-}
+})
 
 export default Task

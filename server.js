@@ -29,10 +29,8 @@ mongoose.connect(
 
 // GET ALL TASKS
 app.get("/tasks", async (req, res) => {
-  console.log("tasks")
   try {
     const todos = await Todo.find({})
-    console.log(todos)
     res.status(200).json(todos)
   } catch (error) {
     res.status(500)
