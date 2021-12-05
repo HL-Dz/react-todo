@@ -7,7 +7,7 @@ export enum TasksActionTypes {
 }
 
 export interface ITodo {
-  _id: string
+  id: string
   cls: string
   text: string
   completed: boolean

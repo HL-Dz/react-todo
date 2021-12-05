@@ -1,10 +1,9 @@
 import React from "react"
 import { observable, action, makeObservable } from "mobx"
 import { delay } from "../helpers/helpers"
-import { ITodo } from "../types/todos"
-import { persist } from "mobx-persist"
+import { v4 as uuidv4 } from "uuid"
 
-let API = "http://localhost:3000"
+let API = process.env.REACT_APP_TODO
 
 class TodoStore {
 		tasks = []
@@ -40,7 +39,7 @@ class TodoStore {
 		  this.resetError()
 		  await delay(500)
 		  try {
-		    const res = await fetch(`${API}/tasks`)
+		    const res = await fetch(`${API}`)
 		    if(res.status === 200) {
 		      const tasks = await res.json()
 		      this.tasks = tasks
@@ -51,18 +50,22 @@ class TodoStore {
 		    this.isLoading = false
 		  }
 		}
-		addNewTask = async (text ) => {
+		addNewTask = async (text) => {
+		  let todo = {
+		    cls: "task",
+		    id: uuidv4(),
+		    text: text,
+		    completed: false
+		  }
 		  this.resetError()
 		  try {
-		    const res = await fetch(`${API}/tasks`, {
+		    const res = await fetch(`${API}`, {
 		      method: "POST",
 		      headers: {
 		        "Accept": "application/json",
 		        "Content-Type": "application/json"
 		      },
-		      body: JSON.stringify({
-		        text: text
-		      })
+		      body: JSON.stringify(todo)
 		    })
 		    if(res.status === 200) {
 		      const task = await res.json()
@@ -75,7 +78,7 @@ class TodoStore {
 		completeTask = async (id , completed) =>{
 		  this.resetError()
 		  try {
-		    const res = await fetch(`/tasks`, {
+		    const res = await fetch(`${API}`, {
 		      method: "PUT",
 		      headers: {
 		        "Accept": "application/json",
@@ -87,12 +90,13 @@ class TodoStore {
 		      })
 		    })
 		    if(res.status === 200) {
-		      let task = await res.json()
+		      let taskUpd = await res.json()
+		      taskUpd = JSON.parse(taskUpd)
 		      this.tasks = this.tasks.map(el => {
-		        if(el._id !== task._id) {
+		        if(el.id !== taskUpd.id) {
 		          return el
 		        } else {
-		          return {...el, completed: completed}
+		          return {...el, completed: taskUpd.completed}
 		        }
 		      })
 		    }
@@ -103,14 +107,18 @@ class TodoStore {
 		deleteTask = async (id) => {
 		  this.resetError()
 		  try {
-		    const res = await fetch(`/tasks/${id}`, {
+		    const res = await fetch(`${API}`, {
 		      method: "DELETE",
-		      headers: { "Accept": "application/json" }
+		      headers: {
+		        "Accept": "application/json",
+		        "Content-Type": "application/json"
+		      },
+		      body: JSON.stringify({id})
 		    })
 		
 		    if(res.status === 200) {
-		      const task = await res.json()
-		      this.tasks = this.tasks.filter(el => el._id !== task._id)
+		      const id = await res.json()
+		      this.tasks = this.tasks.filter(el => el.id !== id)
 		    }
 		  } catch (err) {
 		    this.setError(err)

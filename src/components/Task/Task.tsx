@@ -18,7 +18,7 @@ const Task: FC<ITodo> = observer(({...task}) => {
         type="checkbox"
         className="task-checkbox"
         checked={task.completed}
-        onChange={() => {todostore.completeTask(task._id, !task.completed)}}
+        onChange={() => {todostore.completeTask(task.id, !task.completed)}}
         id="checkbox-elem"
       />
       <Text
@@ -30,7 +30,7 @@ const Task: FC<ITodo> = observer(({...task}) => {
       </Text>
       <Button
         className="task__remove"
-        onClick={() => {deleteCurrentTask(task._id)}}
+        onClick={() => {deleteCurrentTask(task.id)}}
         danger={true}
         type="primary"
       >Delete</Button>

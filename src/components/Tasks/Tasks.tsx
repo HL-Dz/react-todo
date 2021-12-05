@@ -17,7 +17,7 @@ const Tasks= observer(() => {
       {isLoading ? <Spinner/> : null}
       {
         tasks.length === 0 ? <div>No tasks...</div> : 
-          tasks.map((task)=> <Task key={task._id} {...task}/>)
+          tasks.map((task)=> <Task key={task.id} {...task}/>)
       }
     </div>
   )
