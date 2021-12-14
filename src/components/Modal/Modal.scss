@@ -1,0 +1,60 @@
+.images-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.image-card {
+	position: relative;
+	max-width: 300px;
+	display: flex;
+	align-items: center;
+	height: auto;
+	border: 1px dashed grey;
+	margin: 10px;
+}
+
+.image-pic {
+	position: relative;
+	max-width: 250px;
+}
+
+.image-title {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	background: rgba(67, 129, 67, 0.795);
+	color: white;
+	padding: 5px 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.current-img {
+	max-width: 100%;
+	height: auto;
+}
+
+.remove-icon {
+	font-family: Verdana;
+	position: absolute;
+	top: 0px;
+	right: 0;
+	padding: 5px;
+	background: #e91b1b80;
+	color: white;
+	cursor: pointer;
+	margin: 0;
+	border-radius: 0 0 0 3px;
+	transition: all 0.3s ease;
+	z-index: 1;
+
+	&:hover {
+		background: #e91b1b;
+	}
+
+	span {
+		display: inline-flex;
+	}
+}

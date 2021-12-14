@@ -39,7 +39,7 @@ class TodoStore {
 		  this.resetError()
 		  await delay(500)
 		  try {
-		    const res = await fetch(`${API}`)
+		    const res = await fetch(`${API}/todos`)
 		    if(res.status === 200) {
 		      const tasks = await res.json()
 		      this.tasks = tasks
@@ -59,7 +59,7 @@ class TodoStore {
 		  }
 		  this.resetError()
 		  try {
-		    const res = await fetch(`${API}`, {
+		    const res = await fetch(`${API}/todos`, {
 		      method: "POST",
 		      headers: {
 		        "Accept": "application/json",
@@ -75,17 +75,16 @@ class TodoStore {
 		    this.setError(err)
 		  }
 		}
-		completeTask = async (id , completed) =>{
+		completeTask = async (id, completed) =>{
 		  this.resetError()
 		  try {
-		    const res = await fetch(`${API}`, {
+		    const res = await fetch(`${API}/todos/${id}`, {
 		      method: "PUT",
 		      headers: {
 		        "Accept": "application/json",
 		        "Content-Type": "application/json"
 		      },
 		      body: JSON.stringify({
-		        id: id,
 		        completed: completed
 		      })
 		    })
@@ -93,7 +92,7 @@ class TodoStore {
 		      let taskUpd = await res.json()
 		      taskUpd = JSON.parse(taskUpd)
 		      this.tasks = this.tasks.map(el => {
-		        if(el.id !== taskUpd.id) {
+		        if(el.id !== id) {
 		          return el
 		        } else {
 		          return {...el, completed: taskUpd.completed}
@@ -107,7 +106,7 @@ class TodoStore {
 		deleteTask = async (id) => {
 		  this.resetError()
 		  try {
-		    const res = await fetch(`${API}`, {
+		    const res = await fetch(`${API}/todos/${id}`, {
 		      method: "DELETE",
 		      headers: {
 		        "Accept": "application/json",
